@@ -50,7 +50,7 @@ public class FTPServer implements Closeable {
     /**
      * Creates a new server
      */
-    public FTPServer() {
+    public  FTPServer() {
 
     }
 

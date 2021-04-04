@@ -36,7 +36,8 @@ public class CustomServer implements IFTPListener {
         server.setBufferSize(1024 * 5); // 5 kilobytes
 
         // Start it synchronously in our localhost and in the port 21
-        server.listenSync(InetAddress.getByName("localhost"), 21);
+        // change host here
+        server.listenSync(InetAddress.getByName("10.250.154.69"), 21);
     }
 
     @Override
@@ -55,3 +56,6 @@ public class CustomServer implements IFTPListener {
         // be automatically disposed by the JVM
     }
 }
+
+// netstat -ano
+// using it to view all the ports connection status.
