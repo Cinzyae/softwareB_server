@@ -1,6 +1,6 @@
 package com.guichaguri.minimalftp;
 
-import sun.jvm.hotspot.types.JBooleanField;
+import com.guichaguri.minimalftp.custom.UserbaseAuthenticator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +30,7 @@ public class myGUI extends JPanel {
         jb.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // TODO : update server. reserve current accounts and solve MD5 passwords
                 JOptionPane.showMessageDialog(jb, "ok");
             }
         });
@@ -42,12 +43,13 @@ public class myGUI extends JPanel {
 
         // p2:view files and folders
         JPanel panel2 = new JPanel();
-        JFileChooser fc = new JFileChooser("G:\\projects\\softB\\MinimalFTP\\~john");
+        JFileChooser fc = new JFileChooser("G:\\projects\\softB\\MinimalFTP");
+        // TODO : find ~username or just filter folders start with '~'
         panel2.add(fc);
         tabbedPane.addTab("Explorer", icon1, panel2);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
-        // p3:methods to ftp. contain: close\update\
+        // p3:methods to ftp. contain: close and update
         JPanel panel3 = new JPanel();
 
         JButton close_ftp = new JButton();
@@ -67,12 +69,25 @@ public class myGUI extends JPanel {
         update_ftp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        // Create our custom authenticator
+                        UserbaseAuthenticator auth = new UserbaseAuthenticator();
+
+                        // Register a few users
+                        auth.registerUser("a", "a");
+
+                        // Set our custom authenticator
+                        server.setAuthenticator(auth);
+                    }
+                }).start();
             }
         });
 
         panel3.add(close_ftp);
+        panel3.add(update_ftp);
 
         tabbedPane.addTab("Explorer", icon1, panel3);
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);

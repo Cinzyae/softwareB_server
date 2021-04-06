@@ -23,12 +23,11 @@ public class FTP_Server extends JPanel {
 
     private static void startFTP(FTPServer server) throws IOException {
 
-
         // Create our custom authenticator
         UserbaseAuthenticator auth = new UserbaseAuthenticator();
 
         // Register a few users
-        auth.registerUser("john", "1234");
+        auth.registerUser("original", "1234");
 
         // Set our custom authenticator
         server.setAuthenticator(auth);
@@ -43,8 +42,8 @@ public class FTP_Server extends JPanel {
         server.setBufferSize(1024 * 5); // 5 kilobytes
 
         // change host here
-        server.listenSync(InetAddress.getByName("10.250.154.69"), 21);
-
+        //server.listenSync(InetAddress.getByName("localhost"), 21);
+        server.listenSync(InetAddress.getLocalHost(), 21);
     }
 
     public static void main(String[] args) throws IOException {
