@@ -2,9 +2,14 @@
 A lightweight, simple FTP server. Pure Java, no libraries.
 
 ## 爷魔改的地方
-src\test\java\com\guichaguri\minimalftp 底下：
+src\test\java\com\guichaguri\minimalftp 
+
+底下：
+
 CustomServer.java 和 SimpleServer.java 是作者写的例子
+
 FTP_Server 是我后面整的大粪，myGUI是图形界面，用swing写的，很丑。
+
 JTextFieldHintListener 是用来实现hint的，像安卓里面一样虚的提示输入文字。
 
 ## Features
