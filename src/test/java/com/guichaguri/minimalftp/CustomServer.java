@@ -37,7 +37,7 @@ public class CustomServer implements IFTPListener {
 
         // Start it synchronously in our localhost and in the port 21
         // change host here
-        server.listenSync(InetAddress.getByName("10.250.154.69"), 21);
+        server.listenSync(InetAddress.getLocalHost(), 21);
     }
 
     @Override
