@@ -7,10 +7,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class myGUI extends JPanel {
-    public myGUI(FTPServer server) {
+    public myGUI(FTPServer server) throws UnknownHostException {
         super(new GridLayout(1, 1));
 
         JTabbedPane tabbedPane = new JTabbedPane();
@@ -30,7 +31,10 @@ public class myGUI extends JPanel {
         jb.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO : update server. reserve current accounts and solve MD5 passwords
+                String username = jt1.getText();
+                String password = jt2.getText();
+                System.out.println(username + "\t" + password);
+                server.getAuthenticator().registerUser(username, password);
                 JOptionPane.showMessageDialog(jb, "ok");
             }
         });
@@ -43,53 +47,19 @@ public class myGUI extends JPanel {
 
         // p2:view files and folders
         JPanel panel2 = new JPanel();
-        JFileChooser fc = new JFileChooser("G:\\projects\\softB\\MinimalFTP");
-        // TODO : find ~username or just filter folders start with '~'
+        JFileChooser fc = new JFileChooser("./");
         panel2.add(fc);
         tabbedPane.addTab("Explorer", icon1, panel2);
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
         // p3:methods to ftp. contain: close and update
         JPanel panel3 = new JPanel();
+        InetAddress host = InetAddress.getLocalHost();
+        System.out.println(host);
+        JLabel jl = new JLabel(host.toString());
 
-        JButton close_ftp = new JButton();
-        close_ftp.setText("close");
-        close_ftp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    server.close();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            }
-        });
-        JButton update_ftp = new JButton();
-        update_ftp.setText("update");
-        update_ftp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        // Create our custom authenticator
-                        UserbaseAuthenticator auth = new UserbaseAuthenticator();
-
-                        // Register a few users
-                        auth.registerUser("a", "a");
-
-                        // Set our custom authenticator
-                        server.setAuthenticator(auth);
-                    }
-                }).start();
-            }
-        });
-
-        panel3.add(close_ftp);
-        panel3.add(update_ftp);
-
-        tabbedPane.addTab("Explorer", icon1, panel3);
+        panel3.add(jl);
+        tabbedPane.addTab("about", icon1, panel3);
         tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 
         // Add the tabbed pane to this panel.

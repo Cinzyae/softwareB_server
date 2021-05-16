@@ -6,9 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class FTP_Server extends JPanel {
-    private static void createAndShowGUI(FTPServer server) {
+    private static void createAndShowGUI(FTPServer server) throws UnknownHostException {
         //Create and set up the window.
         JFrame frame = new JFrame("FTP");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,8 +27,8 @@ public class FTP_Server extends JPanel {
         // Create our custom authenticator
         UserbaseAuthenticator auth = new UserbaseAuthenticator();
 
-        // Register a few users
-        auth.registerUser("original", "1234");
+//        // Register a few users
+//        auth.registerUser("original", "1234");
 
         // Set our custom authenticator
         server.setAuthenticator(auth);
@@ -44,6 +45,7 @@ public class FTP_Server extends JPanel {
         // change host here
         //server.listenSync(InetAddress.getByName("localhost"), 21);
         server.listenSync(InetAddress.getLocalHost(), 21);
+
     }
 
     public static void main(String[] args) throws IOException {

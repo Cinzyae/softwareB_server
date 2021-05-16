@@ -78,6 +78,7 @@ public interface IUserAuthenticator {
      */
     IFileSystem authenticate(FTPConnection con, InetAddress host, String username, String password) throws AuthException;
 
+    void registerUser(String username, String password);
     /**
      * The exception that should be thrown when the authentication fails
      */

@@ -54,4 +54,9 @@ public class NoOpAuthenticator implements IUserAuthenticator {
     public IFileSystem authenticate(FTPConnection con, InetAddress address, String username, String password) throws AuthException {
         return fs;
     }
+
+    @Override
+    public void registerUser(String username, String password) {
+        return;
+    }
 }
