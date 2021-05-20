@@ -8,7 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 
 public class myGUI extends JPanel {
     public myGUI(FTPServer server) throws UnknownHostException {
@@ -53,10 +56,32 @@ public class myGUI extends JPanel {
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
         // p3:methods to ftp. contain: close and update
+
+        try {
+            Enumeration<NetworkInterface> faces = NetworkInterface.getNetworkInterfaces();
+            while (faces.hasMoreElements()) { // 遍历网络接口
+                NetworkInterface face = faces.nextElement();
+                if (face.isLoopback() || face.isVirtual() || !face.isUp()) {
+                    continue;
+                }
+                System.out.print("\nName:" + face.getDisplayName() + ",Address:");
+                Enumeration<InetAddress> address = face.getInetAddresses();
+                while (address.hasMoreElements()) { // 遍历网络地址
+                    InetAddress addr = address.nextElement();
+                    if (!addr.isLoopbackAddress() && addr.isSiteLocalAddress() && !addr.isAnyLocalAddress()) {
+                        System.out.print(addr.getHostAddress() + " ");
+                    }
+                }
+
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+
         JPanel panel3 = new JPanel();
         InetAddress host = InetAddress.getLocalHost();
         System.out.println(host);
-        JLabel jl = new JLabel(host.toString());
+        JLabel jl = new JLabel("host.toString()");
 
         panel3.add(jl);
         tabbedPane.addTab("about", icon1, panel3);
