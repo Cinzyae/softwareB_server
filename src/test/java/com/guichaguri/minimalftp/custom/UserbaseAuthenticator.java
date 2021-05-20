@@ -41,7 +41,7 @@ public class UserbaseAuthenticator implements IUserAuthenticator {
             freader = new FileInputStream(path);
             ObjectInputStream objectInputStream = new ObjectInputStream(freader);
             map = (Map<String, byte[]>) objectInputStream.readObject();
-            System.out.println("Read file");
+            System.out.println("\nRead file");
             for (String value : map.keySet()) {
                 System.out.println(value);
             }
